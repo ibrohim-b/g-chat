@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">G Chat</string>
+    <string name="action_go">Go</string>
+    <string name="summarize_label">Text to summarize</string>
+    <string name="home_menu_item_text">Home</string>
+    <string name="explore_menu_item_text">Explore</string>
+    <string name="bookmarked_menu_item_text">Bookmarked</string>
+    <string name="chat_searchbar_hint">Ask anything</string>
+    <string name="home_gemini_model_list_hint">Select Model</string>
+    <string name="home_send_image_button">Load a photo</string>
+    <string name="google_ai_logo">Google AI logo</string>
+    <string name="phrase">Trust in every message</string>
+    <string name="start_a_new_chat">Start a chat</string>
+    <string name="start_chat">Start chat</string>
+    <string-array name="gemini_models">
+        <item>Gemini Pro</item>
+        <item>Gemini Vision Pro</item>
+    </string-array>
+</resources>
