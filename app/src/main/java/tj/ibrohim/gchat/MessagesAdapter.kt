@@ -3,6 +3,8 @@ package tj.ibrohim.gchat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -42,9 +44,17 @@ class MessagesAdapter(
     inner class UserMessageViewHolder(itemView: View) : ViewHolder(itemView) {
         private val messageContentTextView: TextView =
             itemView.findViewById(R.id.message_content_text_view)
+        private val mediaGridLayout: GridLayout =
+            itemView.findViewById(R.id.media_grid_layout)
 
         fun bind(message: Message) {
             messageContentTextView.text = message.text
+            message.imagesBitmaps?.forEach {
+                val mediaView: ImageView =
+                    View.inflate(itemView.context, R.layout.media_item_layout, mediaGridLayout)
+                        .findViewById(R.id.media_image_view)
+                mediaView.setImageBitmap(it)
+            }
         }
     }
 

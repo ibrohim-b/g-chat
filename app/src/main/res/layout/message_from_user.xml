@@ -45,4 +45,9 @@
         android:textIsSelectable="true"
         android:text="Hello World!"
         android:textSize="16sp" />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/media_grid_layout"
+        />
 </LinearLayout>

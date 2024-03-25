@@ -33,7 +33,6 @@ import kotlinx.coroutines.launch
 
 
 // Constant for the Gemini model tag.
-const val GEMINI_MODEL = "GEMINI_MODEL"
 private const val TAG = "ChatFragment"
 
 class ChatFragment : Fragment(), OnMessageAction, OnResponseProcessingCompletion {
@@ -48,9 +47,7 @@ class ChatFragment : Fragment(), OnMessageAction, OnResponseProcessingCompletion
     private lateinit var markwon: Markwon
 
     // Get the Gemini model tag from the arguments.
-    private val geminiModelTag: String? by lazy(LazyThreadSafetyMode.NONE) {
-        arguments?.getString(GEMINI_MODEL)
-    }
+
 
 
     // Initialize the view model.
@@ -59,12 +56,10 @@ class ChatFragment : Fragment(), OnMessageAction, OnResponseProcessingCompletion
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.d(TAG, "onCreate: geminiModelTag = $geminiModelTag")
         // Get the Gemini model from the tag.
-        val geminiModel: GeminiModels = GeminiModels.entries.find { it.tag == geminiModelTag }!!
 
         // Initialize the view model with the Gemini model.
-        viewModel.init(geminiModel)
+        viewModel.init()
     }
 
     override fun onCreateView(
@@ -131,7 +126,9 @@ class ChatFragment : Fragment(), OnMessageAction, OnResponseProcessingCompletion
                 viewModel.messagesMutableStateFlow.value.add(responseMessage)
 
                 // Send the message to the view model and collect the response.
+                blockInput()
                 val response = viewModel.sendMessage(userMessage.text, this)
+
                 lifecycleScope.launch {
                     response.collect {
                         // Update the response message with the response text.
@@ -145,6 +142,7 @@ class ChatFragment : Fragment(), OnMessageAction, OnResponseProcessingCompletion
 
                 // Clear the send message text field.
                 sendMessageTextField.editText?.text?.clear()
+                unblockInput()
             }
         }
     }
@@ -262,13 +260,7 @@ class ChatFragment : Fragment(), OnMessageAction, OnResponseProcessingCompletion
 
     companion object {
         // Create a new instance of the fragment with the specified Gemini model.
-        fun newInstance(geminiModel: GeminiModels) = ChatFragment().apply {
-            arguments = bundleOf(GEMINI_MODEL to geminiModel.tag)
-        }
+        fun newInstance() = ChatFragment()
     }
 
-}
-
-interface OnMessageAction {
-    fun onContentCopyClick(text: String)
 }

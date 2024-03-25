@@ -38,9 +38,9 @@ class ChatViewModel : ViewModel() {
      *
      * @param geminiModel The Gemini model to use.
      */
-    fun init(geminiModel: GeminiModels) {
+    fun init() {
         generativeModel = GenerativeModel(
-            modelName = geminiModel.id, apiKey = BuildConfig.apiKey, safetySettings = listOf(
+            modelName = "gemini-pro", apiKey = BuildConfig.apiKey, safetySettings = listOf(
                 harassmentSafety, hateSpeechSafety, sexuallyExplicitSafety, dangerousContentSafety
             )
         )

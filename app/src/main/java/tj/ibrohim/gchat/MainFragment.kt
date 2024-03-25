@@ -37,35 +37,9 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startChatMaterialButton.setOnClickListener {
-            val geminiModels = resources.getStringArray(R.array.gemini_models)
-            var modelSelected: GeminiModels = GeminiModels.GEMINI_PRO
-
-            MaterialAlertDialogBuilder(requireContext()).setTitle("Start chat")
-                .setSingleChoiceItems(geminiModels, 0) { _, which ->
-                    Log.d(TAG, "onClick: item selected: ${geminiModels[which]}")
-                    when (geminiModels[which]) {
-                        GeminiModels.GEMINI_PRO.tag -> {
-                            modelSelected = GeminiModels.GEMINI_PRO
-                        }
-
-                        GeminiModels.GEMINI_VISION.tag -> {
-                            modelSelected = GeminiModels.GEMINI_VISION
-                        }
-                    }
-                }
-                .setPositiveButton("Start") { _, _ ->
-                    Log.d(TAG, "onViewCreated: chat with $modelSelected started")
-                    if (savedInstanceState == null) {
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(R.id.container, ChatFragment.newInstance(modelSelected))
-                            .addToBackStack(null)
-                            .commit()
-                    }
-                }
-                .setNegativeButton("Cancel") { dialogInterface: DialogInterface, _: Int ->
-                    dialogInterface.dismiss()
-                }
-                .show()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.container, ChatFragment.newInstance()).addToBackStack(null)
+                .commit()
 
         }
     }
@@ -75,7 +49,3 @@ class MainFragment : Fragment() {
     }
 }
 
-enum class GeminiModels(val tag: String, val id: String) {
-    GEMINI_PRO("Gemini Pro", "gemini-pro"),
-    GEMINI_VISION("Gemini Vision Pro", "gemini-pro-vision")
-}
